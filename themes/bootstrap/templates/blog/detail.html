@@ -1,0 +1,18 @@
+{% if post %}
+<h1>{{ post.title}}</h1>
+<div>
+    <span class="card-link">作者：{{ post.owner.username }}</span>
+    <span class="card-link">标签：
+                {% for tag in post.tag.all %}
+                <a href="{% url 'tag-list' tag.id %}">{{ tag.name }}</a>
+                {% endfor %}
+    </span>
+</div>
+<hr>
+<p>{{ post.content }}</p>
+{% endif %}
+<hr>
+<hr>
+<div>
+    <span class="card-link"><a href="/">首页</a></span>
+</div>
