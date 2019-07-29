@@ -19,7 +19,8 @@ class PostInline(admin.TabularInline):  # 获取不同的展示样式
 class CategoryAdmin(BaseOwnerAdmin):
     inlines = [PostInline]
     list_display = ('name', 'status', 'is_nav', 'created_time', 'post_count')
-    fields = ('name', 'status', 'is_nav', 'owner')
+    # fields = ('name', 'status', 'is_nav', 'owner')　owner字段有问题
+    fields = ('name', 'status', 'is_nav')
 
     def post_count(self, obj):
         return obj.post_set.count()
@@ -72,6 +73,7 @@ class PostAdmin(BaseOwnerAdmin):
     #     'content',
     #     'tag',
     # )
+    # exclude = ('owner', )
     fieldsets = (
         ('抬头信息', {
             'description': '抬头信息描述',
