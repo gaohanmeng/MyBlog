@@ -22,6 +22,10 @@ class Link(models.Model):
 
     class Meta:
         verbose_name = verbose_name_plural = '友链'
+        ordering = ['-weight']
+
+    def __str__(self):
+        return self.title
 
 
 class SideBar(models.Model):
@@ -55,11 +59,14 @@ class SideBar(models.Model):
     class Meta:
         verbose_name = verbose_name_plural = '侧边栏'
 
-    @classmethod
-    def get_all(cls):
-        return cls.objects.filter(status=cls.STATUS_SHOW)
+    def __str__(self):
+        return self.title
 
-    @property
+    # @classmethod
+    # def get_all(cls):
+    #     return cls.objects.filter(status=cls.STATUS_SHOW)
+
+    # @property
     def content_html(self):
         """直接渲染模板"""
         from blog.models import Post
@@ -71,13 +78,15 @@ class SideBar(models.Model):
 
         elif self.display_type == self.DISPLAY_LATEST:
             context = {
-                'posts': Post.latest_posts()
+                # 'posts': Post.latest_posts(with_related=False)
+                # 根据创建时间排序，取最近的５篇文章
+                'posts': Post.latest_posts().filter().order_by('-created_time')[:5]
             }
             result = render_to_string('config/blocks/sidebar_posts.html', context)
 
         elif self.display_type == self.DISPLAY_HOT:
             context = {
-                'posts': Post.hot_post()
+                'posts': Post.hot_posts().filter().order_by('-pv')[:5]
             }
             result = render_to_string('config/blocks/sidebar_posts.html', context)
 

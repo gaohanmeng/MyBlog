@@ -1,9 +1,12 @@
-from django.contrib import admin
+import xadmin
+
+# from django.contrib import admin
 
 from .models import Comment
-from MyBlog.custom_site import custom_site
+# from MyBlog.custom_site import custom_site
 
 
-@admin.register(Comment, site=custom_site)
-class CommentAdmin(admin.ModelAdmin):
+@xadmin.sites.register(Comment)
+# class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin:
     list_display = ('target', 'nickname', 'content', 'website', 'created_time')

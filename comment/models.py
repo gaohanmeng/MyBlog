@@ -1,6 +1,6 @@
 from django.db import models
 
-from blog.models import Post  # 此处会有相对导入的问题，报红并不是出错，只是pycharm不知道路径
+# from blog.models import Post  # 此处会有相对导入的问题，报红并不是出错，只是pycharm不知道路径
 # from ..blog.models import Post  相对导入不行
 
 
